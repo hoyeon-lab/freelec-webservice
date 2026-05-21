@@ -37,3 +37,4 @@ out/
 .vscode/
 
 application-oauth2.properties
+application-real-db.properties
