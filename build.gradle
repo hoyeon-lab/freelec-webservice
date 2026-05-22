@@ -26,7 +26,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-session-jdbc'
     implementation 'org.springframework.boot:spring-boot-restclient'
 
-    runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
     developmentOnly 'org.springframework.boot:spring-boot-h2console'
@@ -40,6 +39,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-restclient-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
 
+    testRuntimeOnly 'com.h2database:h2'
     testRuntimeOnly 'org.springframework.boot:spring-boot-h2console'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
