@@ -1,4 +1,4 @@
-name: Deploy to S3
+name: Deploy to EC2 with CodeDeploy
 
 on:
   push:
@@ -9,6 +9,8 @@ env:
   PROJECT_NAME: freelec-webservice
   S3_BUCKET: ${{ vars.S3_BUCKET }}
   AWS_REGION: ap-northeast-2
+  CODE_DEPLOY_APPLICATION: freelec-webservice
+  CODE_DEPLOY_DEPLOYMENT_GROUP: freelec-webservice-group
 
 jobs:
   deploy:
@@ -54,3 +56,11 @@ jobs:
       - name: Upload to S3
         run: |
           aws s3 cp deploy/$PROJECT_NAME.zip s3://$S3_BUCKET/$PROJECT_NAME.zip --acl private
+
+      - name: Request CodeDeploy deployment
+        run: |
+          aws deploy create-deployment \
+            --application-name $CODE_DEPLOY_APPLICATION \
+            --deployment-group-name $CODE_DEPLOY_DEPLOYMENT_GROUP \
+            --s3-location bucket=$S3_BUCKET,bundleType=zip,key=$PROJECT_NAME.zip \
+            --region $AWS_REGION
