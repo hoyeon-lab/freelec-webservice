@@ -37,14 +37,16 @@ jobs:
 
       - name: Make deployment package
         run: |
-          zip -r $PROJECT_NAME.zip . \
-            -x "*.git*" \
-            -x ".github/*" \
-            -x "build/tmp/*" \
-            -x "build/reports/*" \
-            -x "deploy/*"
+          mkdir -p before-deploy
+          cp scripts/*.sh before-deploy/
+          cp appspec.yml before-deploy/
+          cp build/libs/*.jar before-deploy/
+          chmod +x before-deploy/*.sh
+          cd before-deploy
+          zip -r before-deploy.zip *
+          cd ../
           mkdir -p deploy
-          mv $PROJECT_NAME.zip deploy/$PROJECT_NAME.zip
+          mv before-deploy/before-deploy.zip deploy/$PROJECT_NAME.zip
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v5
