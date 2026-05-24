@@ -40,7 +40,7 @@ jobs:
           mkdir -p before-deploy
           cp scripts/*.sh before-deploy/
           cp appspec.yml before-deploy/
-          cp build/libs/*.jar before-deploy/
+          cp $(ls build/libs/*.jar | grep -v plain) before-deploy/
           chmod +x before-deploy/*.sh
           cd before-deploy
           zip -r before-deploy.zip *
